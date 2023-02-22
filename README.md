@@ -45,8 +45,8 @@ The Azure Speech Services can be used to convert spoken language to text. This i
 import azure.cognitiveservices.speech as speechsdk
 
 # Set up the Speech SDK configuration
-speech_key = "YourSpeechServicesApiKey"
-service_region = "YourServiceRegion"
+speech_key = SPEECH_KEY
+service_region = SPEECH_REGION
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
 # Set up the audio configuration
