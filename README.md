@@ -38,7 +38,7 @@ uaenorth
 ```
 ## 2. Voice to text
 The Azure Speech Services can be used to convert spoken language to text. This is useful for building applications that can transcribe speech in real-time. Here is how you can use the Speech SDK to convert spoken language to text:
-```
+```python
 import azure.cognitiveservices.speech as speechsdk
 
 # Set up the Speech SDK configuration
