@@ -64,38 +64,39 @@ The Azure Speech Services can also be used to convert text to spoken language. T
 import azure.cognitiveservices.speech as speechsdk
 
 # Set up the Speech SDK configuration
-speech_key = "YourSpeechServicesApiKey"
-service_region = "YourServiceRegion"
+speech_key = SPEECH_KEY
+service_region = SPEECH_REGION
+
+audio_config = speechsdk.audio.AudioOutputConfig(use_default_speaker=True)
+
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
+speech_config.speech_synthesis_voice_name = 'en-US-JennyNeural'
 
-# Set the language to English (US) and the voice to "Microsoft Server Speech Text to Speech Voice (en-US, JennyNeural)"
-speech_config.speech_synthesis_language = "en-US"
-speech_config.speech_synthesis_voice_name = "Microsoft Server Speech Text to Speech Voice (en-US, JennyNeural)"
+speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 
-# Set the voice, style, rate, and pitch
-speech_config.speech_synthesis_style = speechsdk.SpeechSynthesisStyle.chat
-speech_config.speech_synthesis_rate = 0.8
-speech_config.speech_synthesis_pitch = -1.0
-
-# Set up the speech synthesizer
-speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
-
-# Synthesize speech
-result = speech_synthesizer.speak_text_async("How are you doing?").get()
+speech_synthesis_result = speech_synthesizer.speak_text_async("Hey man!").get()
 
 # Play audio
 audio_player = speechsdk.AudioPlayer()
 audio_player.play_audio(result.audio_data)
 ```
-In this example, the speech_synthesis_language property is set to "en-US" to specify that the text should be synthesized in English. You can find a list of supported language codes in the [Azure Text-to-Speech documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support). To get the list of available voices for a given language, you can use the `speechsdk.SpeechSynthesisVoice.get_all_voices` method. Here's an example:
+In this example, the speech_synthesis_language property is set to "en-US" to specify that the text should be synthesized in English. You can find a list of supported language codes in the [Azure Text-to-Speech documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support). 
+You can use change `AudioOutputConfig` to save an audio file:
 ```python
-voices = speechsdk.SpeechSynthesisVoice.get_all_voices("en-US")
-for voice in voices:
-    print(voice.name)
-```
-You can use the `synthesize_speech_to_file` method to save an audio file:
-```python
+import azure.cognitiveservices.speech as speechsdk
+
+# Set up the Speech SDK configuration
+speech_key = SPEECH_KEY
+service_region = SPEECH_REGION
+
 audio_config = speechsdk.audio.AudioOutputConfig(filename="file.wav")
+
+speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
+speech_config.speech_synthesis_voice_name = 'en-US-JennyNeural'
+
+speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+
+speech_synthesis_result = speech_synthesizer.speak_text_async("Hey man!").get()
 ```
 ## 4. Translation
 To translate text using the Azure Translator Text API, you can use the TranslationServiceClient class from the azure.ai.textanalytics module. Here's an example of how to translate a text from English to French:
