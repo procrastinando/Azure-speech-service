@@ -56,7 +56,7 @@ speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audi
 print("Say something...")
 result = speech_recognizer.recognize_once()
 print("You said:", result.text)
-``
+```
 This code sets up the Speech SDK configuration and audio configuration, creates a SpeechRecognizer object, and then calls the `recognize_once` method to transcribe the spoken language to text. The `use_default_microphone` parameter in the `AudioConfig` constructor specifies that the Speech SDK should use the default microphone on the device. To use a different microphone use de `device_name`:
 ```
 audio_config = speechsdk.AudioConfig(device_name="Microphone (2- Audio-Technica USB mic...")
@@ -119,5 +119,4 @@ result = translation_client.translate_text("Hello, how are you?", target_languag
 
 # Print the translated text
 print(result[0].translations[0].text)
-
 ```
