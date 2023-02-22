@@ -101,20 +101,24 @@ speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, au
 speech_synthesis_result = speech_synthesizer.speak_text_async("Hey man!").get()
 ```
 ## 4. Translation
-To translate text using the Azure Translator Text API, you can use the TranslationServiceClient class from the azure.ai.textanalytics module. Here's an example of how to translate a text from English to French:
+To translate recognize an audio from a microphone and translate into other language, `translation` will be used. As an example, translate Argentinan spanish to english:
 ```python
-from azure.ai.textanalytics import TranslationServiceClient
-from azure.core.credentials import AzureKeyCredential
+import azure.cognitiveservices.speech as speechsdk
 
-# Set up the Translation API client
-key = "YourTranslationServicesApiKey"
-endpoint = "YourTranslationServicesEndpoint"
-credential = AzureKeyCredential(key)
-translation_client = TranslationServiceClient(endpoint, credential)
+# Set up the Speech SDK configuration
+speech_key = SPEECH_KEY
+service_region = SPEECH_REGION
+source_lang = "es-AR"
+target_lang = "en"
 
-# Translate text from English to French
-result = translation_client.translate_text("Hello, how are you?", target_language="fr")
+audio_config = speechsdk.AudioConfig(use_default_microphone=True)
 
-# Print the translated text
-print(result[0].translations[0].text)
+speech_translation_config = speechsdk.translation.SpeechTranslationConfig(subscription=SPEECH_KEY, region=SPEECH_REGION)
+speech_translation_config.speech_recognition_language = source_lang
+speech_translation_config.add_target_language(target_lang)
+
+translation_recognizer = speechsdk.translation.TranslationRecognizer(translation_config=speech_translation_config, audio_config=audio_config)
+
+result = translation_recognizer.recognize_once_async().get()
+print(result.translations[target_lang])
 ```
