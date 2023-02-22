@@ -1,5 +1,7 @@
 # Azure-speech-service
 
+The extensive documentation is located [here](https://learn.microsoft.com/en-us/python/api/azure-cognitiveservices-speech/?view=azure-python).
+
 ## 1. Prerequisites
 Before you can use Azure Speech Services, you need to have the following:
 
