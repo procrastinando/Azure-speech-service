@@ -53,15 +53,10 @@ audio_config = speechsdk.AudioConfig(use_default_microphone=True)
 speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
 # Recognize speech
-print("Say something...")
 result = speech_recognizer.recognize_once()
-print("You said:", result.text)
+print(result.text)
 ```
-This code sets up the Speech SDK configuration and audio configuration, creates a SpeechRecognizer object, and then calls the `recognize_once` method to transcribe the spoken language to text. The `use_default_microphone` parameter in the `AudioConfig` constructor specifies that the Speech SDK should use the default microphone on the device. To use a different microphone use de `device_name`:
-```python
-audio_config = speechsdk.AudioConfig(device_name="Microphone (2- Audio-Technica USB mic...")
-```
-You can find the name of your microphone or audio input device by using the `list_microphones` method of the `AudioConfig` class. This method returns a list of available microphones and their device names. You can then select the appropriate device name for your use case.
+This code sets up the Speech SDK configuration and audio configuration, creates a SpeechRecognizer object, and then calls the `recognize_once` method to transcribe the spoken language to text. The `use_default_microphone` parameter in the `AudioConfig` constructor specifies that the Speech SDK should use the default microphone on the device.
 
 ## 3. Text to voice
 The Azure Speech Services can also be used to convert text to spoken language. This is useful for building applications that can generate speech in real-time. Here is how you can use the Speech SDK to convert text to spoken language:
@@ -73,9 +68,9 @@ speech_key = "YourSpeechServicesApiKey"
 service_region = "YourServiceRegion"
 speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
 
-# Set the language to English (US) and the voice to "Microsoft Server Speech Text to Speech Voice (en-US, Guy24KRUS)"
+# Set the language to English (US) and the voice to "Microsoft Server Speech Text to Speech Voice (en-US, JennyNeural)"
 speech_config.speech_synthesis_language = "en-US"
-speech_config.speech_synthesis_voice_name = "Microsoft Server Speech Text to Speech Voice (en-US, Guy24KRUS)"
+speech_config.speech_synthesis_voice_name = "Microsoft Server Speech Text to Speech Voice (en-US, JennyNeural)"
 
 # Set the voice, style, rate, and pitch
 speech_config.speech_synthesis_style = speechsdk.SpeechSynthesisStyle.chat
@@ -100,7 +95,7 @@ for voice in voices:
 ```
 You can use the `synthesize_speech_to_file` method to save an audio file:
 ```python
-result = speech_synthesizer.synthesize_speech_to_file("Hello, how are you doing?", "output.wav")
+audio_config = speechsdk.audio.AudioOutputConfig(filename="file.wav")
 ```
 ## 4. Translation
 To translate text using the Azure Translator Text API, you can use the TranslationServiceClient class from the azure.ai.textanalytics module. Here's an example of how to translate a text from English to French:
