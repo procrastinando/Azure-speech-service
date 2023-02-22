@@ -58,14 +58,14 @@ result = speech_recognizer.recognize_once()
 print("You said:", result.text)
 ```
 This code sets up the Speech SDK configuration and audio configuration, creates a SpeechRecognizer object, and then calls the `recognize_once` method to transcribe the spoken language to text. The `use_default_microphone` parameter in the `AudioConfig` constructor specifies that the Speech SDK should use the default microphone on the device. To use a different microphone use de `device_name`:
-```
+```python
 audio_config = speechsdk.AudioConfig(device_name="Microphone (2- Audio-Technica USB mic...")
 ```
 You can find the name of your microphone or audio input device by using the `list_microphones` method of the `AudioConfig` class. This method returns a list of available microphones and their device names. You can then select the appropriate device name for your use case.
 
 ## 3. Text to voice
 The Azure Speech Services can also be used to convert text to spoken language. This is useful for building applications that can generate speech in real-time. Here is how you can use the Speech SDK to convert text to spoken language:
-```
+```python
 import azure.cognitiveservices.speech as speechsdk
 
 # Set up the Speech SDK configuration
@@ -93,18 +93,18 @@ audio_player = speechsdk.AudioPlayer()
 audio_player.play_audio(result.audio_data)
 ```
 In this example, the speech_synthesis_language property is set to "en-US" to specify that the text should be synthesized in English. You can find a list of supported language codes in the [Azure Text-to-Speech documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support). To get the list of available voices for a given language, you can use the `speechsdk.SpeechSynthesisVoice.get_all_voices` method. Here's an example:
-```
+```python
 voices = speechsdk.SpeechSynthesisVoice.get_all_voices("en-US")
 for voice in voices:
     print(voice.name)
 ```
 You can use the `synthesize_speech_to_file` method to save an audio file:
-```
+```python
 result = speech_synthesizer.synthesize_speech_to_file("Hello, how are you doing?", "output.wav")
 ```
 ## 4. Translation
 To translate text using the Azure Translator Text API, you can use the TranslationServiceClient class from the azure.ai.textanalytics module. Here's an example of how to translate a text from English to French:
-```
+```python
 from azure.ai.textanalytics import TranslationServiceClient
 from azure.core.credentials import AzureKeyCredential
 
